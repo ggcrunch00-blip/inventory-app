@@ -90,6 +90,21 @@ export function AppProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    if (!repository.subscribeClassroom) {
+      return undefined;
+    }
+
+    const unsubscribe = repository.subscribeClassroom((classroom) => {
+      setData((currentData) => ({
+        ...currentData,
+        classroom: classroom || DEFAULT_CLASSROOM,
+      }));
+    });
+
+    return typeof unsubscribe === 'function' ? unsubscribe : undefined;
+  }, [repository]);
+
+  useEffect(() => {
     function handleOnline() {
       setIsOnline(true);
       setSyncStatus((current) => (current === 'queued' ? 'saved' : current));

@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, writeBatch } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, setDoc, writeBatch } from 'firebase/firestore';
 import { CHARACTERS, DEFAULT_CLASSROOM, normalizeCharacterId } from '../utils/constants';
 import { cloneMockSeed } from '../data/mockSeed';
 import {
@@ -233,6 +233,18 @@ async function ensureAuthSeedData(students, admins) {
 export function createFirebaseRepository() {
   return {
     mode: 'firebase',
+
+    subscribeClassroom(onChange) {
+      const classroomRef = doc(db, 'classrooms', 'main');
+
+      return onSnapshot(classroomRef, (snapshot) => {
+        const classroom = snapshot.exists()
+          ? decodeUnicodeDeep({ id: snapshot.id, ...snapshot.data() })
+          : DEFAULT_CLASSROOM;
+
+        onChange(classroom);
+      });
+    },
 
     async bootstrap() {
       let [students, items, sessions, logs, admins] = await Promise.all([

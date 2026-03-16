@@ -228,6 +228,24 @@ export function createMockRepository() {
   return {
     mode: 'mock',
 
+    subscribeClassroom(onChange) {
+      if (typeof window === 'undefined') {
+        return () => {};
+      }
+
+      const handleStorage = (event) => {
+        if (event.key && event.key !== STORAGE_KEY) {
+          return;
+        }
+
+        const database = readDb();
+        onChange(decodeUnicodeDeep(database.classroom || DEFAULT_CLASSROOM));
+      };
+
+      window.addEventListener('storage', handleStorage);
+      return () => window.removeEventListener('storage', handleStorage);
+    },
+
     async bootstrap() {
       return delay(buildSnapshot(readDb()));
     },
