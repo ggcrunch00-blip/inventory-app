@@ -407,6 +407,11 @@ textarea {
   gap: 10px;
 }
 
+.inline-form input,
+.inline-form select {
+  flex: 1 1 280px;
+}
+
 .info-list,
 .score-summary {
   display: grid;
@@ -414,15 +419,23 @@ textarea {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.summary-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .info-list div,
-.score-summary div {
+.score-summary div,
+.summary-grid div {
   padding: 14px;
   border-radius: 16px;
   background: #f8fafc;
 }
 
 .info-list span,
-.score-summary span {
+.score-summary span,
+.summary-grid span {
   display: block;
   color: #64748b;
   font-size: 0.9rem;
@@ -665,6 +678,11 @@ textarea {
   background: white;
 }
 
+.student-admin-card--expanded {
+  border-color: #cbd5e1;
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.12);
+}
+
 .student-admin-card__header {
   display: flex;
   justify-content: space-between;
@@ -692,6 +710,26 @@ textarea {
   gap: 10px;
 }
 
+.selection-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.selection-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.selection-panel__header strong {
+  display: block;
+}
+
 .checkbox-row {
   display: flex;
   align-items: center;
@@ -716,6 +754,16 @@ textarea {
   color: #0f172a;
 }
 
+.management-card {
+  padding: 18px;
+}
+
+.management-card--active {
+  border-color: #cbd5e1;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.14);
+}
+
 .bullet-list li {
   padding: 8px 0;
   color: #334155;
@@ -737,6 +785,7 @@ textarea {
   .admin-columns,
   .stats-grid,
   .info-list,
+  .summary-grid,
   .score-summary,
   .reward-preview {
     grid-template-columns: 1fr;
